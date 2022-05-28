@@ -1,0 +1,32 @@
+node 
+{
+{
+ def mavenHome = toolname: "maven"
+}
+stage ('checkout code')
+
+{
+git credentialsId: 'Git-credentials ', url: 'https://github.com/Raghvendradevops/maven-web-application.git'
+}
+
+stage ('build a package')
+
+{
+sh "${mavenHome}/bin/mvn clean package"
+}
+
+stage ('deploy to nexus')
+
+{
+sh "${mavenHome}/bin/mvn deploy"
+}
+
+stage ('deploy to the tomCat')
+
+{
+sshagent(['93691780-b977-4741-a657-dbc3b9f6c8e2']) {
+sh "scp -o StrictHostkeyChecking=no target/maven-web-application.war ec2-user@52.39.185.103:/opt/apache-tomcat-9.0.60/webapps/"
+}
+
+}
+}
