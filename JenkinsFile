@@ -1,32 +1,36 @@
-node 
-{
-{
- def mavenHome = toolname: "maven"
+node{
+
+def mavenHome = tool name: "maven3.8.6"
+
+def buildNumber=BUILD_NUMBER
+
+    stage('SCM Checkout'){
+        git credentialsId: 'a7029420-302f-42b5-b613-c47a95b44e59', url: 'https://github.com/ast-ec-project/maven-web-application.git'
+    }
+    
+    stage(" Maven Clean Package"){
+      sh "${mavenHome}/bin/mvn clean package"
+    }
+    
+    stage('Build Docker Image'){
+        sh "docker build -t raghvendra3006/mavenproject:${buildNumber} ."
+    }
+    
+    stage('Push Docker Image'){
+        withCredentials([string(credentialsId: 'docker_hub', variable: 'dockerhubpasswd')]) {
+          sh "docker login -u raghvendra3006 -p ${dockerhubpasswd}"
+        }
+        sh "docker push raghvendra3006/mavenproject:${buildNumber}"
+        }
+        
+        stage ('deploye image in the deployement server') 
+        {
+sshagent(['ssh_deployementserver_container']){
+    
+sh "ssh -o StrictHostKeyChecking=no ubuntu@35.89.53.41 docker rm -f testcontainer || true"
+
+sh "ssh -o StrictHostKeyChecking=no ubuntu@35.89.53.41 docker run -d --name testcontainer -p 8080:8080 raghvendra3006/mavenproject:${buildNumber}"
+
 }
-stage ('checkout code')
-
-{
-git credentialsId: 'Git-credentials ', url: 'https://github.com/Raghvendradevops/maven-web-application.git'
-}
-
-stage ('build a package')
-
-{
-sh "${mavenHome}/bin/mvn clean package"
-}
-
-stage ('deploy to nexus')
-
-{
-sh "${mavenHome}/bin/mvn deploy"
-}
-
-stage ('deploy to the tomCat')
-
-{
-sshagent(['93691780-b977-4741-a657-dbc3b9f6c8e2']) {
-sh "scp -o StrictHostkeyChecking=no target/maven-web-application.war ec2-user@52.39.185.103:/opt/apache-tomcat-9.0.60/webapps/"
-}
-
-}
+}     
 }
