@@ -1,5 +1,7 @@
 node{
-
+    
+properties([pipelineTriggers([githubPush()])])
+    
 def mavenHome = tool name: "maven3.8.6"
 
 def buildNumber=BUILD_NUMBER
