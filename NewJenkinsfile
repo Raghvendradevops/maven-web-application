@@ -27,9 +27,9 @@ def buildNumber=BUILD_NUMBER
         {
 sshagent(['ssh_deployementserver_container']){
     
-sh "ssh -o StrictHostKeyChecking=no ubuntu@35.89.53.41 docker rm -f testcontainer || true"
+sh "ssh -o StrictHostKeyChecking=no ubuntu@65.2.39.246 docker rm -f testcontainer || true"
 
-sh "ssh -o StrictHostKeyChecking=no ubuntu@35.89.53.41 docker run -d --name testcontainer -p 8080:8080 raghvendra3006/mavenproject:${buildNumber}"
+sh "ssh -o StrictHostKeyChecking=no ubuntu@65.2.39.246 docker run -d --name testcontainer -p 8080:8080 raghvendra3006/mavenproject:${buildNumber}"
 
 }
 }     
