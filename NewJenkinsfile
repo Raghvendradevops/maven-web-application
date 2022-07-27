@@ -25,7 +25,7 @@ def buildNumber=BUILD_NUMBER
         
         stage ('deploye image in the deployement server') 
         {
-sshagent(['ssh_deployementserver_container']){
+sshagent(['deployementserever']){
     
 sh "ssh -o StrictHostKeyChecking=no ubuntu@65.2.39.246 docker rm -f testcontainer || true"
 
