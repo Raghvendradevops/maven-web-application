@@ -1,3 +1,5 @@
+
+\*
 pipeline{
 
 agent any
@@ -30,7 +32,7 @@ stages{
   sh  "mvn clean package"
   }
   }
-/*
+
  stage('ExecuteSonarQubeReport'){
   steps{
   sh  "mvn clean sonar:sonar"
@@ -50,7 +52,7 @@ stages{
   }
   }
   }
-  */
+  
 }//Stages Closing
 
 post{
@@ -73,3 +75,4 @@ post{
 
 
 }//Pipeline closing
+*/
