@@ -98,13 +98,13 @@
 	    <repository>
 	      <id>nexus</id>
 	      <name>Raghvendra DevOps repository Release</name>
-	      <url>http://52.88.201.236:8081/repository/Wallmartloginmodule-Release/</url>
+	      <url>http://65.2.33.126:8081/repository/test-release/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
 	      <id>nexus</id>
 	      <name>Raghvendra DevOps repository Snapshot</name>
-	      <url>http://52.88.201.236:8081/repository/wallmartloginmodule-snapsot/</url>
+	      <url>http://65.2.33.126:8081/repository/test-snapshot/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
